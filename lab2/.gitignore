@@ -1,0 +1,8 @@
+Include/*
+__pycache__/*
+*.pyc
+Lib/*
+Scripts/*
+pyvenv.cfg
+
+*.pem
