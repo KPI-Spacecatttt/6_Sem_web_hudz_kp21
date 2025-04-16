@@ -4,8 +4,6 @@ services:
   casdoor:
     image: casbin/casdoor-all-in-one
     container_name: casdoor
-    ports:
-      - "8000:8000"
     networks:
       - casdoor_net
 
