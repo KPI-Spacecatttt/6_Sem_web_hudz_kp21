@@ -1,0 +1,27 @@
+{"properties": [
+  {
+    "name": "casdoor.login-endpoint",
+    "type": "java.lang.String",
+    "description": "A description for 'casdoor.login-endpoint'"
+  },
+  {
+    "name": "casdoor.token-endpoint",
+    "type": "java.lang.String",
+    "description": "A description for 'casdoor.token-endpoint'"
+  },
+  {
+    "name": "casdoor.connect-endpoint",
+    "type": "java.lang.String",
+    "description": "A description for 'casdoor.connect-endpoint'"
+  },
+  {
+    "name": "casdoor.connect-client-id",
+    "type": "java.lang.String",
+    "description": "A description for 'casdoor.connect-client-id'"
+  },
+  {
+    "name": "casdoor.connect-client-secret",
+    "type": "java.lang.String",
+    "description": "A description for 'casdoor.connect-client-secret'"
+  }
+]}

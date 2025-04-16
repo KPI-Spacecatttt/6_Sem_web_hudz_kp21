@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  casdoor:
+    image: casbin/casdoor-all-in-one
+    container_name: casdoor
+    ports:
+      - "8000:8000"
+    networks:
+      - casdoor_net
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "8443:8443"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./keys:/etc/nginx/certs
+    depends_on:
+      - casdoor
+    networks:
+      - casdoor_net
+
+networks:
+  casdoor_net:
+    driver: bridge
