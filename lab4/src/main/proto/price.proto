@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option java_package = "com.example.lab4.protobuf";
+option java_outer_classname = "PriceUpdateClass";
+
+message PriceUpdate {
+  string symbol = 1;
+  string price = 2;
+}
