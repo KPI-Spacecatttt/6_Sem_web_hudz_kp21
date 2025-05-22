@@ -97,7 +97,6 @@
             <artifactId>protobuf-java-util</artifactId>
             <version>4.31.0</version>
         </dependency>
-
     </dependencies>
 
 
@@ -122,12 +121,36 @@
                     <protocArtifact>com.google.protobuf:protoc:4.31.0:exe:${os.detected.classifier}</protocArtifact>
                     <outputDirectory>${project.build.directory}/generated-sources/protobuf/java</outputDirectory>
                     <clearOutputDirectory>false</clearOutputDirectory>
+                    <protoSourceRoot>${project.basedir}/src/proto</protoSourceRoot>
                 </configuration>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>test-compile</goal>
+                            <goal>compile</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>generate-proto</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${project.basedir}/src/frontend</workingDirectory>
+                            <executable>npm</executable>
+                            <arguments>
+                                <argument>run</argument>
+                                <argument>proto:gen</argument>
+                            </arguments>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

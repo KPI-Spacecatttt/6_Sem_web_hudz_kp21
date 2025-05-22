@@ -5,7 +5,6 @@
     <meta charset="UTF-8" />
     <title>Lab4</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/protobufjs/dist/protobuf.min.js"></script>
 </head>
 
 <body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-6">
@@ -43,24 +42,25 @@
         <p><em>Click "Get Currencies" to display prices after logging in.</em></p>
     </div>
 
-    <script>
+    <script type="module">
+        import { decodePriceUpdate } from './protobuf/price_pb.js';
+
         let ws = null;
         let isLoggedIn = false;
         let root = null;
-        let PriceUpdate = null;
 
         const configuredPairs = ["BTCUSDT", "ETHUSDT", "BNBUSDT", "SOLUSDT", "XRPUSDT"];
 
         // Load protobuf schema
-        protobuf.load("./proto/price.proto")
-            .then(loadedRoot => {
-                root = loadedRoot;
-                PriceUpdate = root.lookupType("com.example.lab4.protobuf.PriceUpdate");
-                console.log("Protobuf schema loaded.");
-            })
-            .catch(err => {
-                console.error("Failed to load .proto file:", err);
-            });
+        //protobuf.load("./proto/price.proto")
+        //    .then(loadedRoot => {
+        //        root = loadedRoot;
+        //        PriceUpdate = root.lookupType("com.example.lab4.protobuf.PriceUpdate");
+        //        console.log("Protobuf schema loaded.");
+        //    })
+        //    .catch(err => {
+        //        console.error("Failed to load .proto file:", err);
+        //    });
 
         // Button actions
         function login() {
@@ -107,13 +107,14 @@
             ws.binaryType = 'arraybuffer';
 
             ws.onopen = () => {
-                console.log("✅ WebSocket connected.");
+                console.log("WebSocket connected.");
             };
 
             ws.onmessage = (event) => {
                 try {
-                    const msg = PriceUpdate.decode(new Uint8Array(event.data));
-                    updatePrice(msg);
+                    const buffer = new Uint8Array(event.data);
+                    const decoded = decodePriceUpdate(buffer);
+                    updatePrice(decoded);
                 } catch (e) {
                     console.error("Failed to decode protobuf:", e);
                 }
@@ -162,6 +163,12 @@
 
         // On page load
         window.addEventListener("load", checkAuthStatus);
+
+        //bind functions to window for module
+        window.login = login;
+        window.getUserInfo = getUserInfo;
+        window.startStream = startStream;
+        window.stopStream = stopStream;
     </script>
 </body>
 

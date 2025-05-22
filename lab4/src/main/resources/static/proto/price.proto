@@ -1,7 +1,0 @@
-syntax = "proto3";
-package com.example.lab4.protobuf;
-
-message PriceUpdate {
-  string symbol = 1;
-  string price = 2;
-}
